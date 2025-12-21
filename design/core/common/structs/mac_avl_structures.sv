@@ -20,13 +20,13 @@
 
 // The client acts as a source and the TX MAC acts as a sink in the transmit direction.
 typedef struct packed {
-    logic        valid;
+    logic         valid;
     logic [511:0] data;
-    logic        startofpacket;
-    logic        endofpacket;
-    logic [15:0] empty;
-    logic        error;
-    logic        skip_crc;
+    logic         sop;
+    logic         eop;
+    logic [15:0]  empty;
+    logic         error;
+    logic         skip_crc;
     
 } mac_avltx_t;
 
@@ -46,13 +46,13 @@ typedef struct packed {
 
 
 typedef struct packed {
-    logic        valid;
+    logic         valid;
     logic [511:0] data;
-    logic        startofpacket;
-    logic        endofpacket;
-    logic [5:0]  empty;
-    logic [5:0]  errors;
-    logic        rxstatus_valid;
-    logic [39:0] rxstatus_data;
+    logic         sop;
+    logic         eop;
+    logic [5:0]   empty;
+    logic [5:0]   errors;
+    logic         rxstatus_valid;
+    logic [39:0]  rxstatus_data;
 
 } mac_avlrx_t;

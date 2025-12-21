@@ -20,7 +20,7 @@ endif
 
 # List your SystemVerilog source files for this testbench and design
 # Include common support files (clock/reset) if needed
-TB_FILES = ../common/irst.v ../common/iclk.v
+TB_FILES = ../core/tb_tych_core.sv
 STRUCTURE_FILES = $(DESIGN_DIR)/core/common/structs/mac_avl_structures.sv
 RTL_FILES =
 
@@ -53,8 +53,13 @@ endif
 # vmap mappings are created before compilation
 compile: work vmap_all
 	@echo $(TEST_MSG)
+	@$(MAKE) -C ../ compile
 	$(VLOG_CMD)
 
 # Main target: using the top-level module as the target name
 top_tb: TEST_MSG = "Starting simulation for $(TOP_MODULE)"
 top_tb: simulate
+
+# Clean target that calls parent directory's clean
+clean:
+	@$(MAKE) -C ../ clean

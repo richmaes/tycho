@@ -6,7 +6,7 @@ ifeq ($(OS),Windows_NT)
     ECHO = echo
     RM = del /F /Q
     RMDIR = rmdir /S /Q
-    CLEAN_CMD = if exist work $(RMDIR) work & if exist transcript $(RM) transcript & if exist *.wlf $(RM) *.wlf & $(RM) etch* & $(RM) *.dbg
+    CLEAN_CMD = if exist work ($(RMDIR) work) & if exist transcript ($(RM) transcript) & if exist *.wlf ($(RM) *.wlf)
     LIB_PATH = C:\intelFPGA\18.0\modelsim_ase\altera\verilog
     
 else
@@ -25,6 +25,12 @@ DESIGN_DIR = $(WORKSPACE_ROOT)/design
 VLOG_CMD = vlog $(STRUCTURE_FILES) $(RTL_FILES) $(TB_FILES) $(INCDIR)
 VLOG_CMD += -64
 VLOG_CMD += +define+SIMULATION
+VLOG_CMD += -mfcu
+VLOG_CMD += -sv23compat
+VLOG_CMD += -sv
+VLOG_CMD += -svfilesuffix=sv,svh
+VLOG_CMD += -svinputport=net
+VLOG_CMD += -warning 2892
 
 VOPT_CMD = vopt 
 VOPT_CMD += work.$(TOP_MODULE)
@@ -51,15 +57,6 @@ VSIM_CMD += -do "../run.do"
 GUI_CMD = vsim
 GUI_CMD += -64
 GUI_CMD += -view  $(TOP_MODULE).wlf
-
-# Clean up generated files (adjust as needed)
-clean:
-	@echo "Cleaning up simulation files..."
-	$(CLEAN_CMD)
-
-compile:
-	@echo $(TEST_MSG)
-	$(VLOG_CMD)
 
 optimize: compile
 	$(VOPT_CMD)
