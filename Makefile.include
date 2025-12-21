@@ -1,6 +1,28 @@
+# Detect OS and set appropriate shell and commands
+ifeq ($(OS),Windows_NT)
+    SHELL = cmd.exe
+    # Windows-specific settings
+    PATH_SEP = \\
+    ECHO = echo
+    RM = del /F /Q
+    RMDIR = rmdir /S /Q
+    CLEAN_CMD = if exist work $(RMDIR) work & if exist transcript $(RM) transcript & if exist *.wlf $(RM) *.wlf & $(RM) etch* & $(RM) *.dbg
+    LIB_PATH = C:\intelFPGA\18.0\modelsim_ase\altera\verilog
+    
+else
+    SHELL = /bin/bash
+    # Unix-specific settings
+    PATH_SEP = /
+    RM = rm -f
+    RMDIR = rm -rf
+    CLEAN_CMD = $(RMDIR) work transcript *.wlf etch* *.dbg
+endif
+
 GUI ?= 0
 
-VLOG_CMD = vlog $(RTL_FILES) $(TB_FILES) $(INCDIR)
+DESIGN_DIR = $(WORKSPACE_ROOT)/design
+
+VLOG_CMD = vlog $(STRUCTURE_FILES) $(RTL_FILES) $(TB_FILES) $(INCDIR)
 VLOG_CMD += -64
 VLOG_CMD += +define+SIMULATION
 
@@ -33,7 +55,7 @@ GUI_CMD += -view  $(TOP_MODULE).wlf
 # Clean up generated files (adjust as needed)
 clean:
 	@echo "Cleaning up simulation files..."
-	rm -rf work transcript *.wlf etch* *.dbg
+	$(CLEAN_CMD)
 
 compile:
 	@echo $(TEST_MSG)
