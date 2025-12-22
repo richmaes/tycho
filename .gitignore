@@ -1,3 +1,5 @@
 sim/core/transcript
-sim/core/work/*
 sim/core/modelsim.ini
+sim/core/work/*
+sim/common/work/*
+design/core/work/*

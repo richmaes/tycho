@@ -24,7 +24,7 @@ typedef struct packed {
     logic [511:0] data;
     logic         sop;
     logic         eop;
-    logic [15:0]  empty;
+    logic [5:0]   empty;
     logic         error;
     logic         skip_crc;
     

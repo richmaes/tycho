@@ -6,7 +6,7 @@ ifeq ($(OS),Windows_NT)
     ECHO = echo
     RM = del /F /Q
     RMDIR = rmdir /S /Q
-    CLEAN_CMD = if exist work ($(RMDIR) work) & if exist transcript ($(RM) transcript) & if exist *.wlf ($(RM) *.wlf)
+    CLEAN_CMD = $(RMDIR) work 2>nul & $(RM) transcript 2>nul & $(RM) *.wlf 2>nul &  $(RM) *.ini 2>nul
     LIB_PATH = C:\intelFPGA\18.0\modelsim_ase\altera\verilog
     
 else

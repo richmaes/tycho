@@ -43,7 +43,11 @@ VSIM_CMD += $(LIB_INC)
 # This ensures ModelSim/Questa knows where each library directory is
 vmap_all:
 	@echo "Creating library mappings (vmap)"
+	
 ifeq ($(OS),Windows_NT)
+	vmap sim_common "..\..\sim\common"
+	vmap design_core "..\..\design\core"
+	vmap design_core_common "..\..\design\core\common"
 	@for %%L in ($(LIBS)) do vmap  %%L "$(LIB_PATH)$(PATH_SEP)%%L"
 else
 	@for lib in $(LIBS); do vmap $$lib "$(LIB_PATH)$(PATH_SEP)$$lib"; done
@@ -62,4 +66,5 @@ top_tb: simulate
 
 # Clean target that calls parent directory's clean
 clean:
+	@$(CLEAN_CMD)
 	@$(MAKE) -C ../ clean
