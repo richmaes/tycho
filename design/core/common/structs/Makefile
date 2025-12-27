@@ -35,4 +35,7 @@ clean:
 	@echo "Cleaning $(LIB_NAME)..."
 	@$(CLEAN_CMD)
 
-.PHONY: all compile clean work
+print_libdir:
+	@echo $(WORK_DIR)
+
+.PHONY: all compile clean work print_libdir

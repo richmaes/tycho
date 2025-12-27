@@ -11,31 +11,22 @@ else
     LIB_NAME = $(subst /,_,$(patsubst ./%,%,$(CURDIR)))
 endif
 
-# Work directory for this library
-WORK_DIR = $(CURDIR)/work
-
 # List your source files for this directory
 TB_FILES = iclk.v irst.v
 RTL_FILES =
 
 all: work compile
 
-# Create work library
-work:
-ifeq ($(OS),Windows_NT)
-	@if not exist $(WORK_DIR) (vlib $(WORK_DIR))
-else
-	@test -d $(WORK_DIR) || vlib $(WORK_DIR)
-endif
-
 # Compile with library mapping
-compile: work
+compile:
 	@echo "Compiling for library: $(LIB_NAME)"
-	$(VLOG_CMD) -work $(WORK_DIR)
-#	@$(MAKE) -C ../core compile
+	$(VLOG_CMD)
 
 clean:
 	@echo "Cleaning $(LIB_NAME)..."
 	@$(CLEAN_CMD)
 
-.PHONY: all compile clean work
+print_libdir:
+	@echo $(WORK_DIR)
+
+.PHONY: all compile clean work print_libdir

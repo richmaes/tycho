@@ -2,9 +2,9 @@ MAKEFILE_INCLUDE = ../Makefile.include
 include $(MAKEFILE_INCLUDE)
 
 # Subdirectories to build
-SUBDIRS = common
+SUBDIRS = ../ common
 
-.PHONY: all compile clean work $(SUBDIRS)
+.PHONY: all compile clean work $(SUBDIRS) collect_libdirs
 
 all: compile
 
@@ -29,5 +29,15 @@ ifeq ($(OS),Windows_NT)
 else
 	@for dir in $(SUBDIRS); do \
 	    make -C "$$dir" work; \
+	done
+endif
+
+# Collect library directories from all subdirectories
+collect_libdirs:
+ifeq ($(OS),Windows_NT)
+	@for %%d in ($(SUBDIRS)) do @make -C "%%d" print_libdir
+else
+	@for dir in $(SUBDIRS); do \
+	    make -C "$$dir" print_libdir; \
 	done
 endif

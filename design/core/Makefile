@@ -42,4 +42,14 @@ clean:
 	@echo "Cleaning $(LIB_NAME)..."
 	@$(CLEAN_CMD)
 
-.PHONY: all compile clean work
+print_libdir:
+	@echo $(WORK_DIR)
+ifeq ($(OS),Windows_NT)
+	@for %%d in ($(SUBDIRS)) do @make -C "%%d" print_libdir
+else
+	@for dir in $(SUBDIRS); do \
+	    make -C "$$dir" print_libdir; \
+	done
+endif
+
+.PHONY: all compile clean work print_libdir

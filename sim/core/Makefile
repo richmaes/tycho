@@ -24,9 +24,6 @@ TB_FILES = ../core/tb_tych_core.sv
 STRUCTURE_FILES = $(DESIGN_DIR)/core/common/structs/mac_avl_structures.sv
 RTL_FILES =
 
-
-
-
 # Specify the top-level module for simulation
 TOP_MODULE = tb_tych_core
 TOP_OPT_MODULE = $(TOP_MODULE)_opt
@@ -42,23 +39,28 @@ VSIM_CMD += $(LIB_INC)
 # Create vmap mappings for all libraries listed in LIBS
 # This ensures ModelSim/Questa knows where each library directory is
 vmap_all:
-	@echo "Creating library mappings (vmap)"
-	
+	@echo "Creating library mappings (vmap) $(LIBS)"
 ifeq ($(OS),Windows_NT)
-	vmap sim_common "..\..\sim\common"
-	vmap design_core "..\..\design\core"
-	vmap design_core_common "..\..\design\core\common"
 	@for %%L in ($(LIBS)) do vmap  %%L "$(LIB_PATH)$(PATH_SEP)%%L"
 else
 	@for lib in $(LIBS); do vmap $$lib "$(LIB_PATH)$(PATH_SEP)$$lib"; done
 endif
+	@echo "Library mappings created."
 
 # Override compile target to ensure work directory exists and the
 # vmap mappings are created before compilation
-compile: work vmap_all
+compile: work
 	@echo $(TEST_MSG)
 	@$(MAKE) -C ../ compile
 	$(VLOG_CMD)
+#	@echo "Creating library mappings (vmap) for compiled libraries..."
+#ifeq ($(OS),Windows_NT)
+#	@for /f "delims=" %%p in ('make -C .. collect_libdirs 2^>nul ^| findstr /r "^[A-Z]:"') do @if exist "%%p" vmap work_%%~nxp "%%p"
+#	@for /f "delims=" %%p in ('make -C ../../design/core print_libdir 2^>nul ^| findstr /r "^[A-Z]:"') do @if exist "%%p" vmap work_%%~nxp "%%p"
+#else
+#	@make -C .. collect_libdirs 2>/dev/null | grep "^/" | while read path; do [ -d "$$path" ] && vmap "work_$$(basename $$path)" "$$path"; done
+#	@make -C ../../design/core print_libdir 2>/dev/null | grep "^/" | while read path; do [ -d "$$path" ] && vmap "work_$$(basename $$path)" "$$path"; done
+#endif
 
 # Main target: using the top-level module as the target name
 top_tb: TEST_MSG = "Starting simulation for $(TOP_MODULE)"
