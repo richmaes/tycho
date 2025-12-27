@@ -19,22 +19,14 @@ TB_FILES =
 RTL_FILES = tych_core.sv
 STRUCTURE_FILES =
 
-all: work compile
-
-# Create work library
-work:
-ifeq ($(OS),Windows_NT)
-	@if not exist $(WORK_DIR) (vlib $(WORK_DIR))
-else
-	@test -d $(WORK_DIR) || vlib $(WORK_DIR)
-endif
+all: compile
 
 $(SUBDIRS):
 	@echo "Building $@..."
 	make -C $@ compile
 
 # Compile with library mapping
-compile: work $(SUBDIRS)
+compile: $(SUBDIRS)
 	@echo "Compiling for library: $(LIB_NAME)"
 	$(VLOG_CMD) -work $(WORK_DIR) $(STRUCTURE_FILES) $(RTL_FILES) $(TB_FILES) $(INCDIR)
 
@@ -52,4 +44,4 @@ else
 	done
 endif
 
-.PHONY: all compile clean work print_libdir $(SUBDIRS)
+.PHONY: all compile clean print_libdir $(SUBDIRS)

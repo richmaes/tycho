@@ -3,3 +3,4 @@ sim/core/modelsim.ini
 sim/core/work/*
 sim/common/work/*
 design/core/work/*
+design/core/common/structs/work/*

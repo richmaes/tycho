@@ -4,7 +4,7 @@ include $(MAKEFILE_INCLUDE)
 # Top-level Makefiles to call - Do not call sim because sim takes care of itself
 SUBDIRS = design
 
-.PHONY: all compile clean work $(SUBDIRS)
+.PHONY: all compile clean $(SUBDIRS)
 
 all: compile
 
@@ -24,11 +24,3 @@ else
 	done
 endif
 
-work:
-ifeq ($(OS),Windows_NT)
-	@for %%d in ($(SUBDIRS)) do make -C "%%d" work
-else
-	@for dir in $(SUBDIRS); do \
-	    make -C "$$dir" work; \
-	done
-endif

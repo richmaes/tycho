@@ -15,7 +15,7 @@ endif
 TB_FILES = iclk.v irst.v
 RTL_FILES =
 
-all: work compile
+all: compile
 
 # Compile with library mapping
 compile:

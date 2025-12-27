@@ -4,7 +4,7 @@ include $(MAKEFILE_INCLUDE)
 # Subdirectories to build
 SUBDIRS = structs
 
-.PHONY: all compile clean work $(SUBDIRS) print_libdir
+.PHONY: all compile clean $(SUBDIRS) print_libdir
 
 all: compile
 
@@ -24,14 +24,6 @@ else
 	done
 endif
 
-work:
-ifeq ($(OS),Windows_NT)
-	@for %%d in ($(SUBDIRS)) do make -C "%%d" work
-else
-	@for dir in $(SUBDIRS); do \
-	    make -C "$$dir" work; \
-	done
-endif
 
 # Collect library directories from subdirectories
 print_libdir:
