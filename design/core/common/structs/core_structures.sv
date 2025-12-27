@@ -1,3 +1,6 @@
+`ifndef CORE_STRUCTURES_SV__
+`define CORE_STRUCTURES_SV__
+
 typedef struct packed {
     logic         valid;  // Valid bit
     logic [511:0] data;   // Data payload     
@@ -9,6 +12,11 @@ typedef struct packed {
     
 } core_avl_t;
 
+typedef struct packed {
+    logic  [1:0]  stat_en;
+    logic  [11:0] stat0_id;
+    logic  [11:0] stat1_id;
+} core_stats_t;
 
 typedef struct packed {
     logic         valid;
@@ -34,9 +42,6 @@ typedef struct packed {
     logic [11:0]  frm_dbg_id; // Frame Debug ID
 } core_ingmeta_t;
 
-typdef struct packed {
-    logic  [1:0]  stat_en;
-    logic  [11:0] stat0_id;
-    logic  [11:0] stat1_id;
-} core_stats_t;
 
+
+`endif

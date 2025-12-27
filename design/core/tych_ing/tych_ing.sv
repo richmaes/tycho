@@ -1,9 +1,11 @@
-module tych_ing
+`include "../common/structs/core_structures.sv"
 
-input logic clk,
-input logic reset,
+module tych_ing (
 
-input core_avl_t core_avl_in [1:0],
+input wire clk,
+input wire reset,
+
+input wire core_avl_t core_avl_in [1:0],
 output core_avl_t core_avl_out [1:0]
 );
 

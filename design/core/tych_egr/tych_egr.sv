@@ -1,4 +1,6 @@
-module tych_egr
+module tych_egr (
 input logic clk,
 input logic reset
+);
+
 endmodule

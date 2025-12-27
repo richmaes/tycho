@@ -16,7 +16,7 @@ WORK_DIR = $(CURDIR)/work
 
 # List your source files for this directory
 TB_FILES =
-RTL_FILES = tych_core.sv
+RTL_FILES = tych_core.sv ./tych_ing/tych_ing.sv  ./tych_egr/tych_egr.sv
 STRUCTURE_FILES =
 
 all: compile
