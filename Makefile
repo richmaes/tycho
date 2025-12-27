@@ -1,8 +1,8 @@
 MAKEFILE_INCLUDE = ./Makefile.include
 include $(MAKEFILE_INCLUDE)
 
-# Top-level Makefiles to call - Do not call
-SUBDIRS = design sim
+# Top-level Makefiles to call - Do not call sim because sim takes care of itself
+SUBDIRS = design
 
 .PHONY: all compile clean work $(SUBDIRS)
 

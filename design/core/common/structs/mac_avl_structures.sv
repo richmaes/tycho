@@ -1,4 +1,6 @@
-`default_nettype none
+`ifndef __MAC_AVL_STRUCTURES_SV__
+`define __MAC_AVL_STRUCTURES_SV__
+
 
 // Structure definitions for MAC Avalon Streaming interfaces
 
@@ -56,3 +58,5 @@ typedef struct packed {
     logic [39:0]  rxstatus_data;
 
 } mac_avlrx_t;
+
+`endif

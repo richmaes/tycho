@@ -52,7 +52,7 @@ endif
 compile: work
 	@echo $(TEST_MSG)
 	@$(MAKE) -C ../ compile
-	$(VLOG_CMD)
+	$(VLOG_CMD) $(STRUCTURE_FILES) $(RTL_FILES) $(TB_FILES) $(INCDIR)
 #	@echo "Creating library mappings (vmap) for compiled libraries..."
 #ifeq ($(OS),Windows_NT)
 #	@for /f "delims=" %%p in ('make -C .. collect_libdirs 2^>nul ^| findstr /r "^[A-Z]:"') do @if exist "%%p" vmap work_%%~nxp "%%p"

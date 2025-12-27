@@ -52,4 +52,4 @@ else
 	done
 endif
 
-.PHONY: all compile clean work print_libdir
+.PHONY: all compile clean work print_libdir $(SUBDIRS)

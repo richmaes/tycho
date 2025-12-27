@@ -15,6 +15,7 @@ $(SUBDIRS):
 	@$(MAKE) -C $@ compile
 
 clean:
+	@echo "Cleaning simulation directory ./sim ..."
 ifeq ($(OS),Windows_NT)
 	@for %%d in ($(SUBDIRS)) do make -C "%%d" clean
 else
@@ -24,6 +25,7 @@ else
 endif
 
 work:
+	@echo "Creating work directories in all subdirectories..."
 ifeq ($(OS),Windows_NT)
 	@for %%d in ($(SUBDIRS)) do make -C "%%d" work
 else

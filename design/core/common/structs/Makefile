@@ -29,7 +29,7 @@ endif
 # Compile with library mapping
 compile: work
 	@echo "Compiling for library: $(LIB_NAME)"
-	vlog -work $(WORK_DIR) $(STRUCTURE_FILES) $(RTL_FILES) $(TB_FILES) $(INCDIR)
+	$(VLOG_CMD) $(STRUCTURE_FILES) $(RTL_FILES) $(TB_FILES) $(INCDIR)
 
 clean:
 	@echo "Cleaning $(LIB_NAME)..."

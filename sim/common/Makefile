@@ -20,7 +20,7 @@ all: work compile
 # Compile with library mapping
 compile:
 	@echo "Compiling for library: $(LIB_NAME)"
-	$(VLOG_CMD)
+	$(VLOG_CMD)  $(STRUCTURE_FILES) $(RTL_FILES) $(TB_FILES) $(INCDIR)
 
 clean:
 	@echo "Cleaning $(LIB_NAME)..."

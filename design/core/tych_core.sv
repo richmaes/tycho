@@ -1,12 +1,14 @@
-//`include "./common/structs/mac_avl_structures.sv"
+`include "./common/structs/mac_avl_structures.sv"
+
+//import mac_avl_structures_sv_unit::*;
 
 module tych_core (
-input logic clk,
-input logic rst,
+input  wire        clk,
+input  wire        rst,
 
 output mac_avltx_t mac_0_tx,
-input        logic mac_0_tx_ready,
-input  mac_avlrx_t mac_0_rx
+input  wire        mac_0_tx_ready,
+input  wire mac_avlrx_t mac_0_rx
 
 );
 
