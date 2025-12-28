@@ -9,14 +9,7 @@ LIBS =
 # foreach so the flags are available to recipe commands (not generated inside a shell loop).
 # By default this produces: -L altera_mf -L altera_lnsim
 LIB_INC := $(foreach L,$(LIBS),-L $(L))
-
-# Create work library
-work:
-ifeq ($(OS),Windows_NT)
-	@if not exist work (vlib work)
-else
-	@test -d work || vlib work
-endif
+LIB_INC := -L tych_core_lib
 
 # List your SystemVerilog source files for this testbench and design
 # Include common support files (clock/reset) if needed
@@ -28,7 +21,7 @@ RTL_FILES =
 TOP_MODULE = tb_tych_core
 TOP_OPT_MODULE = $(TOP_MODULE)_opt
 
-all: work compile simulate
+all: compile simulate
 
 # Append the computed LIB_INC flags to the VLOG command defined in Makefile.include
 # This adds the -L <lib> flags to the simulator compile command
@@ -42,6 +35,7 @@ vmap_all:
 	@echo "Creating library mappings (vmap) $(LIBS)"
 ifeq ($(OS),Windows_NT)
 	@for %%L in ($(LIBS)) do vmap  %%L "$(LIB_PATH)$(PATH_SEP)%%L"
+	vmap tych_core_lib ../../design/core/work
 else
 	@for lib in $(LIBS); do vmap $$lib "$(LIB_PATH)$(PATH_SEP)$$lib"; done
 endif
@@ -49,7 +43,7 @@ endif
 
 # Override compile target to ensure work directory exists and the
 # vmap mappings are created before compilation
-compile: work
+compile:
 	@echo $(TEST_MSG)
 	@$(MAKE) -C ../ compile
 	$(VLOG_CMD) $(STRUCTURE_FILES) $(RTL_FILES) $(TB_FILES) $(INCDIR)
@@ -61,6 +55,9 @@ compile: work
 #	@make -C .. collect_libdirs 2>/dev/null | grep "^/" | while read path; do [ -d "$$path" ] && vmap "work_$$(basename $$path)" "$$path"; done
 #	@make -C ../../design/core print_libdir 2>/dev/null | grep "^/" | while read path; do [ -d "$$path" ] && vmap "work_$$(basename $$path)" "$$path"; done
 #endif
+
+simulate: compile vmap_all
+	$(VSIM_CMD)
 
 # Main target: using the top-level module as the target name
 top_tb: TEST_MSG = "Starting simulation for $(TOP_MODULE)"
