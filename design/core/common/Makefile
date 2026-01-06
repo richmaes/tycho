@@ -2,7 +2,7 @@ MAKEFILE_INCLUDE = ../../../Makefile.include
 include $(MAKEFILE_INCLUDE)
 
 # Subdirectories to build
-SUBDIRS = structs
+SUBDIRS = structs param_ip
 
 .PHONY: all compile clean $(SUBDIRS) print_libdir
 

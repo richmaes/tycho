@@ -1,6 +1,20 @@
 `include "../common/structs/mac_avl_structures.sv"
 `include "../common/structs/core_structures.sv"
 
+//
+//  Signal Flow Diagram:
+//
+//                         +----------------+
+//                         |                |
+//    mac_rx ---------->   |   tych_ing     |   -----> core_avl_out
+//   (mac_avlrx_t)         |                |         (core_avl_t)
+//                         |                |.        to packet buffer IF
+//                         |                |
+//                         |                |   -----> core_ingmeta_out
+//                         |                |         (core_ingmeta_t)
+//                         +----------------+.        to fwd decision
+//
+
 module tych_ing (
 
 input wire clk,
@@ -12,13 +26,14 @@ input  mac_avlrx_t    mac_rx,
 output core_avl_t     core_avl_out,
 input  wire           core_avl_out_ready,
 
-output core_ingmeta_t core_ingmeta_out
+output core_ingmeta_t core_ingmeta_out,
+input                 core_ingmeta_out_ready
+
 );
 
-// Internal core_avl signal after MAC RX conversion
-core_avl_t core_avl_in;
-
-module tych_ing_m2c_avl (
+// Convert the MAC RX interface to Core AVL interface
+// Add a debug tag to each frame
+tych_ing_m2c_avl u_tych_ing_m2c_avl(
     .clk(),
     .rst(),
     
@@ -28,6 +43,8 @@ module tych_ing_m2c_avl (
     // Core AVL interface output
     .core_avl(core_avl_out)
 );
+
+
 
 
 // TODO: Add ingress processing logic here

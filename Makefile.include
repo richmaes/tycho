@@ -18,6 +18,9 @@ else
     CLEAN_CMD = $(RMDIR) work transcript *.wlf etch* *.dbg
 endif
 
+# Export Questa Sim directory
+export QUESTASIM_DIR = /opt/tools/intelFPGA_pro/25.3.0.109/questa_fse/bin
+
 GUI ?= 0
 
 DESIGN_DIR = $(WORKSPACE_ROOT)/design
